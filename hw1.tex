@@ -1,0 +1,666 @@
+\documentclass[a4paper]{article}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage[pdf]{graphviz}
+\usepackage[table]{xcolor}
+\usepackage{morewrites}
+\usepackage{verbatim}
+\usepackage{amsmath}
+\usepackage{calc}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+
+\usepackage{xpatch}
+\makeatletter
+\newcommand*{\addFileDependency}[1]{% argument=file name and extension
+  \typeout{(#1)}
+  \@addtofilelist{#1}
+  \IfFileExists{#1}{}{\typeout{No file #1.}}
+}
+\makeatother
+\xpretocmd{\digraph}{\addFileDependency{#2.dot}}{}{}
+
+
+
+\author{Чуворкин Михаил А-13а-19}
+\title{Домашняя работа по дисциплине Теоретические модели вычслений №1}
+
+
+\begin{document}
+\nocite{*}
+\maketitle
+
+\section{Задание №1. Построить конечный автомат, распознающий язык.}
+
+\subsection{Язык 1.}
+$$ L = \left\{ w \in \left\{ a, b, c \right\}^{*} \mid \left| w \right|_{c} = 1 \right\} $$
+
+Данный язык включает все слова из букв $\left\{ a, b, c \right\}$, но содержащие только одну букву $c$. 
+
+\digraph[scale=0.5]{esm11}{
+	rankdir=LR; 
+	node [shape=none]; start;
+	node [shape=circle]; 1;
+	node [shape=doublecircle]; 2;
+	start -> 1;
+	1 -> 2 [label = "c"];
+	1 -> 1 [label = "a,b"];
+	2 -> 2 [label = "a,b"];
+}
+
+
+
+
+
+
+\subsection{Язык 2.}
+$$ L = \left\{ w \in \left\{ a, b \right\}^{*} \mid \left| w \right|_{a} \leq 2, \left| w \right|_{b} \geq 2 \right\} $$
+
+Предствим, что есть решетка. При поглощении $a$ происходит перемещение вниз по решетке, а при поглощении $b$ переход вправо по решетке.
+
+\digraph[scale=0.5]{esm12}{
+	rankdir=LR; 
+	node [shape=none]; start;
+	node [shape=circle]; 1 2 4 5 7 8;
+	node [shape=doublecircle]; 3 6 9;
+	start -> 1;
+	1 -> 2 [label = "b"];
+	1 -> 4 [label = "a"];
+	2 -> 3 [label = "b"];
+	2 -> 5 [label = "a"];
+	3 -> 3 [label = "b"];
+	3 -> 6 [label = "a"];
+
+	4 -> 5 [label = "b"];
+	4 -> 7 [label = "a"];
+	5 -> 6 [label = "b"];
+	5 -> 8 [label = "a"];
+	6 -> 6 [label = "b"];
+	6 -> 9 [label = "a"];
+
+	7 -> 8 [label = "b"];
+	8 -> 9 [label = "b"];
+	9 -> 9 [label = "b"];
+}
+
+
+
+
+
+\subsection{Язык 3.}
+$$ L = \left\{ w \in \left\{ a, b \right\}^{*} \mid \left| w \right|_{a} \neq \left| w \right|_{b} \right\} $$
+
+Нельзя построить автомат, так как для распознавания этого языка требуется запоминать количество символов.
+
+
+\subsection{Язык 4.}
+$$ L = \left\{ w \in \left\{ a, b \right\}^{*} \mid ww=www \right\} $$
+
+В данном случае язык будет состоять только из пустого символа, так как условая спарведливы только для $w = \varepsilon$
+
+
+\digraph[scale=0.5]{esm11}{
+	rankdir=LR; 
+	node [shape=none]; start;
+	node [shape=doublecircle]; 1;
+	start -> 1;
+}
+
+\section{Задание №2. Построить конечный автомат, используя прямое произведение.}
+
+\subsection{Язык 1.}
+$$ L_{1} = \left\{ w \in \left\{ a, b \right\}^{*} \mid \left| w \right|_{a} \geq 2 \wedge \left| w \right|_{b} \geq 2 \right\} $$
+
+Рассмотрим языки, описывающие части условия языка $L$:
+
+$ A_{1} = \left\{ w \in \left\{ a, b \right\}^{*} \mid \left| w \right|_{a} \geq 2 \right\} $
+
+$ \Sigma_{A} = \left\{ a, b \right\}$
+$ Q_{A} = \left\{ 1, 2, 3 \right\} $
+$ s_{A} = \left\{ 1 \right\} $
+$ T_{A} = \left\{ 3 \right\}$
+
+\digraph[scale=0.5]{esm21A1}{
+	rankdir=LR; 
+	node [shape=none]; start;
+	node [shape=circle]; 1 2;
+	node [shape=doublecircle]; 3;
+	start -> 1;
+	1 -> 2 [label = "a"];
+	1 -> 1 [label = "b"];
+	2 -> 3 [label = "a"];
+	2 -> 2 [label = "b"];
+	3 -> 3 [label = "a,b"];
+}
+
+
+$ B_{1} = \left\{ w \in \left\{ a, b \right\}^{*} \mid \left| w \right|_{b} \geq 2 \right\} $
+
+$ \Sigma_{B} = \left\{ a, b \right\}$
+$ Q_{B} = \left\{ 1, 2, 3 \right\} $
+$ s_{B} = \left\{ 1 \right\} $
+$ T_{B} = \left\{ 3 \right\}$
+
+
+\digraph[scale=0.5]{esm21B1}{
+	rankdir=LR; 
+	node [shape=none]; start;
+	node [shape=circle]; 1 2;
+	node [shape=doublecircle]; 3;
+	start -> 1;
+	1 -> 2 [label = "b"];
+	1 -> 1 [label = "a"];
+	2 -> 3 [label = "b"];
+	2 -> 2 [label = "a"];
+	3 -> 3 [label = "a,b"];
+}
+
+Тогда: $L_{1} = A_{1} \times B_{1}$
+
+$ \Sigma = \Sigma_{A} \cup \Sigma_{B} = \left\{ a, b \right\}$
+
+$ Q = Q_{A} \times Q_{B} = \left\{ 11, 12, 13, 21, 22, 23, 31, 32, 33 \right\}$
+
+$ s = <s_{1}, s_{2}> = \left\{ 11 \right\}$
+
+$ T = T_{A} \times T_{B} = \left\{ 33 \right\}$
+
+
+Таблица состояний:
+\begin{table}[!htbp]
+\rowcolors{2}{gray!10}{gray!40}
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+$A$ & $B$ & $a$ & $b$ \\ \hline
+1   & 1   & 21  & 12  \\ \hline
+1   & 2   & 22  & 13  \\ \hline
+1   & 3   & 23  & 13  \\ \hline
+2   & 1   & 31  & 22  \\ \hline
+2   & 2   & 32  & 23  \\ \hline
+2   & 3   & 33  & 23  \\ \hline
+3   & 1   & 31  & 32  \\ \hline
+3   & 2   & 32  & 33  \\ \hline
+3   & 3   & 33  & 33  \\ \hline
+\end{tabular}
+\caption{Таблица состояний (Задание 2.1)}
+\end{table}
+
+
+\digraph[scale=0.5]{esm21}{
+	rankdir=LR; 
+	node [shape=none]; start;
+	node [shape=circle]; 11 12 13 21 22 23 31 32;
+	node [shape=doublecircle]; 33;
+	start -> 11;
+	11 -> 12 [label = "b"];
+	11 -> 21 [label = "a"];
+	12 -> 13 [label = "b"];
+	12 -> 22 [label = "a"];
+	13 -> 13 [label = "b"];
+	13 -> 23 [label = "a"];
+
+	21 -> 22 [label = "b"];
+	21 -> 31 [label = "a"];
+	22 -> 23 [label = "b"];
+	22 -> 32 [label = "a"];
+	23 -> 23 [label = "b"];
+	23 -> 33 [label = "a"];
+
+	31 -> 32 [label = "b"];
+	31 -> 31 [label = "a"];
+	32 -> 33 [label = "b"];
+	32 -> 32 [label = "a"];
+	33 -> 33 [label = "b"];
+}
+
+\subsection{Язык 2.}
+$$ L_{2} = \left\{ w \in \left\{ a, b \right\}^{*} \mid \left| w \right| \geq 3 \wedge \left| w \right| \text{нечетное} \right\} $$
+
+Рассмотрим языки, описывающие части условия языка $L$:
+
+$ A_{2} = \left\{ w \in \left\{ a, b \right\}^{*} \mid \left| w \right| \geq 3 \right\} $
+
+$ \Sigma_{A} = \left\{ a, b \right\}$
+$ Q_{A} = \left\{ 1, 2, 3, 4 \right\} $
+$ s_{A} = \left\{ 1 \right\} $
+$ T_{A} = \left\{ 4 \right\}$
+
+\digraph[scale=0.5]{esm22A2}{
+	rankdir=LR; 
+	node [shape=none]; start;
+	node [shape=circle]; 1;
+	node [shape=circle]; 2;
+	node [shape=circle]; 3;
+	node [shape=doublecircle]; 4;
+	start -> 1;
+	1 -> 2 [label = "a,b"];
+	2 -> 3 [label = "a,b"];
+	3 -> 4 [label = "a,b"];
+	4 -> 4 [label = "a,b"];
+}
+
+
+$ B_{2} = \left\{ w \in \left\{ a, b \right\}^{*} \mid  \left| w \right| \text{нечетное} \right\} $
+
+$ \Sigma_{B} = \left\{ a, b \right\}$
+$ Q_{B} = \left\{ 1, 2 \right\} $
+$ s_{B} = \left\{ 1 \right\} $
+$ T_{B} = \left\{ 2 \right\}$
+
+\digraph[scale=0.5]{esm22B2}{
+	rankdir=LR; 
+	node [shape=none]; start;
+	node [shape=circle]; 1;
+	node [shape=doublecircle]; 2;
+	start -> 1;
+	1 -> 2 [label = "a,b"];
+	2 -> 1 [label = "a,b"];
+}
+
+Тогда: $L_{2} = A_{2} \times B_{2}$
+
+$ \Sigma = \left\{ a, b \right\}$
+
+$ Q = \left\{ 11, 12, 21, 22, 31, 32, 41, 42 \right\}$
+
+$ s = \left\{ 11 \right\}$
+
+$ T = \left\{ 42 \right\}$
+
+
+\begin{table}[!htbp]
+\rowcolors{2}{gray!10}{gray!40}
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+$A$ & $B$ & $a$ & $b$ \\ \hline
+1   & 1   & 22  & 22  \\ \hline
+1   & 2   & 21  & 21  \\ \hline
+2   & 1   & 32  & 32  \\ \hline
+2   & 2   & 31  & 31  \\ \hline
+3   & 1   & 42  & 42  \\ \hline
+3   & 2   & 41  & 41  \\ \hline
+4   & 1   & 42  & 42  \\ \hline
+4   & 2   & 41  & 41  \\ \hline
+\end{tabular}
+\caption{Таблица состояний (Задание 2.2)}
+\end{table}
+
+
+\digraph[scale=0.5]{esm22}{
+	rankdir=LR; 
+	node [shape=none]; start;
+	node [shape=circle]; 11 12 21 22 31 32 41;
+	node [shape=doublecircle]; 42;
+	start -> 11;
+	11 -> 22 [label = "a,b"];
+	12 -> 21 [label = "a,b"];
+	21 -> 32 [label = "a,b"];
+	22 -> 31 [label = "a,b"];
+	31 -> 42 [label = "a,b"];
+	32 -> 41 [label = "a,b"];
+	41 -> 42 [label = "a,b"];
+	42 -> 41 [label = "a,b"];
+
+}
+
+
+\subsection{Язык 3.}
+$$ L_{3} = \left\{ w \in \left\{ a, b \right\}^{*} \mid \left| w \right|_{a} \text{четное} \wedge \left| w \right|_{b} \text{кратно трем} \right\} $$
+
+Рассмотрим языки, описывающие части условия языка $L$:
+
+$ A_{3} = \left\{ w \in \left\{ a, b \right\}^{*} \mid \left| w \right|_{a} \text{четное} \right\} $
+
+$ \Sigma_{A} = \left\{ a, b \right\}$
+$ Q_{A} = \left\{ 1, 2 \right\} $
+$ s_{A} = \left\{ 1 \right\} $
+$ T_{A} = \left\{ 1 \right\}$
+
+\digraph[scale=0.5]{esm23A3}{
+	rankdir=LR; 
+	node [shape=none]; start;
+	node [shape=circle]; 2;
+	node [shape=doublecircle]; 1;
+	start -> 1;
+	1 -> 1 [label = "b"];
+	1 -> 2 [label = "a"];
+	2 -> 2 [label = "b"];
+	2 -> 1 [label = "a"];
+}
+
+
+$ B_{3} = \left\{ w \in \left\{ a, b \right\}^{*} \mid  \left| w \right|_{b} \text{кратно трем} \right\} $
+
+$ \Sigma_{B} = \left\{ a, b \right\}$
+$ Q_{B} = \left\{ 1, 2, 3 \right\} $
+$ s_{B} = \left\{ 1 \right\} $
+$ T_{B} = \left\{ 1 \right\}$
+
+\digraph[scale=0.5]{esm23B3}{
+	rankdir=LR; 
+	node [shape=none]; start;
+	node [shape=circle]; 2 3;
+	node [shape=doublecircle]; 1;
+	start -> 1;
+	1 -> 1 [label = "a"];
+	1 -> 2 [label = "b"];
+	2 -> 2 [label = "a"];
+	2 -> 3 [label = "b"];
+	3 -> 3 [label = "a"];
+	3 -> 1 [label = "b"];
+}
+
+Тогда: $L_{3} = A_{3} \times B_{3}$
+
+$ \Sigma_{3} = \left\{ a, b \right\}$
+
+$ Q_{3} = \left\{ 11, 12, 13, 21, 22, 23 \right\}$
+
+$ s_{3} = \left\{ 11 \right\}$
+
+$ T_{3} = \left\{ 11 \right\}$
+
+
+\begin{table}[!htbp]
+\rowcolors{2}{gray!10}{gray!40}
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+$A$ & $B$ & $a$ & $b$ \\ \hline
+1   & 1   & 21  & 12  \\ \hline
+1   & 2   & 22  & 13  \\ \hline
+1   & 3   & 23  & 11  \\ \hline
+2   & 1   & 11  & 22  \\ \hline
+2   & 2   & 12  & 23  \\ \hline
+2   & 3   & 13  & 21  \\ \hline
+\end{tabular}
+\caption{Таблица состояний (Задание 2.3)}
+\end{table}
+
+
+\digraph[scale=0.5]{esm23}{
+	rankdir=LR; 
+	node [shape=none]; start;
+	node [shape=circle]; 12 13 21 22 23;
+	node [shape=doublecircle]; 11;
+	start -> 11;
+	11 -> 12 [label = "b"];
+	11 -> 21 [label = "a"];
+	12 -> 13 [label = "b"];
+	12 -> 22 [label = "a"];
+	13 -> 11 [label = "b"];
+	13 -> 23 [label = "a"];
+
+	21 -> 22 [label = "b"];
+	21 -> 11 [label = "a"];
+	22 -> 23 [label = "b"];
+	22 -> 12 [label = "a"];
+	23 -> 21 [label = "b"];
+	23 -> 13 [label = "a"];
+}
+
+\subsection{Язык 4.}
+$$ L_{4} = \bar{L_{3}}$$
+
+Данный язык будет распознаяаться автоматом 
+$ \bar{L_{3}} = \left\{ \Sigma_{3}, Q_{3}, s_{3}, Q_{3}\backslash T_{3}, \delta_{3} \right\} $
+
+$ T_{4} = Q_{3} \backslash T_{3} = \left\{ 12, 13, 21, 22, 23 \right\} $
+
+
+\digraph[scale=0.5]{esm24}{
+	rankdir=LR; 
+	node [shape=none]; start;
+	node [shape=doublecircle]; 12 13 21 22 23;
+	node [shape=circle]; 11;
+	start -> 11;
+	11 -> 12 [label = "b"];
+	11 -> 21 [label = "a"];
+	12 -> 13 [label = "b"];
+	12 -> 22 [label = "a"];
+	13 -> 11 [label = "b"];
+	13 -> 23 [label = "a"];
+
+	21 -> 22 [label = "b"];
+	21 -> 11 [label = "a"];
+	22 -> 23 [label = "b"];
+	22 -> 12 [label = "a"];
+	23 -> 21 [label = "b"];
+	23 -> 13 [label = "a"];
+}
+
+
+\subsection{Язык 5.}
+$$ L_{5} = L_{2} \backslash L_{3}$$
+
+
+$ L_{5} = L_{2} \backslash L_{3} = L_{2} \cap \bar{L_{3}} = L_{2} \times \bar{L_{3}} $
+
+Заметим, что автомат для $ L_{2} $ можно упростить:
+
+\digraph[scale=0.5]{esm25L2}{
+	rankdir=LR; 
+	node [shape=none]; start;
+	node [shape=circle]; 1 2 3;
+	node [shape=doublecircle]; 4;
+	start -> 1;
+	1 -> 2 [label = "a,b"];
+	2 -> 3 [label = "a,b"];
+	3 -> 4 [label = "a,b"];
+	4 -> 3 [label = "a,b"];
+}
+
+Для автомата $ \bar{L_{3}} $ введем новую нумерацию состояний:
+
+\digraph[scale=0.5]{esm25nL3}{
+	rankdir=LR; 
+	node [shape=none]; start;
+	node [shape=doublecircle]; 2 3 4 5 6;
+	node [shape=circle]; 1;
+	start -> 1;
+	1 -> 2 [label = "b"];
+	1 -> 4 [label = "a"];
+	2 -> 3 [label = "b"];
+	2 -> 5 [label = "a"];
+	3 -> 1 [label = "b"];
+	3 -> 6 [label = "a"];
+
+	4 -> 5 [label = "b"];
+	4 -> 1 [label = "a"];
+	5 -> 6 [label = "b"];
+	5 -> 2 [label = "a"];
+	6 -> 4 [label = "b"];
+	6 -> 3 [label = "a"];
+}
+
+
+\begin{table}[!htbp]
+\rowcolors{2}{gray!10}{gray!40}
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+$L_{2}$ & $\bar{L_{3}}$ & $a$ & $b$ \\ \hline
+1       & 1             & 24  & 22  \\ \hline
+1       & 2             & 25  & 23  \\ \hline
+1       & 3             & 26  & 21  \\ \hline
+1       & 4             & 21  & 25  \\ \hline
+1       & 5             & 22  & 26  \\ \hline
+1       & 6             & 23  & 24  \\ \hline
+2       & 1             & 34  & 32  \\ \hline
+2       & 2             & 35  & 33  \\ \hline
+2       & 3             & 36  & 31  \\ \hline
+2       & 4             & 31  & 35  \\ \hline
+2       & 5             & 32  & 36  \\ \hline
+2       & 6             & 33  & 34  \\ \hline
+3       & 1             & 44  & 42  \\ \hline
+3       & 2             & 45  & 43  \\ \hline
+3       & 3             & 46  & 41  \\ \hline
+3       & 4             & 41  & 45  \\ \hline
+3       & 5             & 42  & 46  \\ \hline
+3       & 6             & 43  & 44  \\ \hline
+4       & 1             & 34  & 32  \\ \hline
+4       & 2             & 35  & 33  \\ \hline
+4       & 3             & 36  & 31  \\ \hline
+4       & 4             & 31  & 35  \\ \hline
+4       & 5             & 32  & 36  \\ \hline
+4       & 6             & 33  & 34  \\ \hline
+\end{tabular}
+\caption{Таблица состояний (Задание 2.3)}
+\end{table}
+
+
+
+Получился такой автомат:
+
+\digraph[scale=0.3]{esm25}{
+	rankdir=LR; 
+	node [shape=none]; start;
+	node [shape=doublecircle]; 42 43 45 46;
+	node [shape=circle]; 11 12 13 14 15 16 21 22 23 24 25 26 31 32 33 34 35 36 41 44;
+	start -> 11;
+	11 -> 24 [label="a"]
+	12 -> 25 [label="a"]
+	13 -> 26 [label="a"]
+	14 -> 21 [label="a"]
+	15 -> 22 [label="a"]
+	16 -> 23 [label="a"]
+	21 -> 34 [label="a"]
+	22 -> 35 [label="a"]
+	23 -> 36 [label="a"]
+	24 -> 31 [label="a"]
+	25 -> 32 [label="a"]
+	26 -> 33 [label="a"]
+	31 -> 44 [label="a"]
+	32 -> 45 [label="a"]
+	33 -> 46 [label="a"]
+	34 -> 41 [label="a"]
+	35 -> 42 [label="a"]
+	36 -> 43 [label="a"]
+	41 -> 34 [label="a"]
+	42 -> 35 [label="a"]
+	43 -> 36 [label="a"]
+	44 -> 31 [label="a"]
+	45 -> 32 [label="a"]
+	46 -> 33 [label="a"]
+
+
+
+	11 -> 22 [label="b"]
+	12 -> 23 [label="b"]
+	13 -> 21 [label="b"]
+	14 -> 25 [label="b"]
+	15 -> 26 [label="b"]
+	16 -> 24 [label="b"]
+	21 -> 32 [label="b"]
+	22 -> 33 [label="b"]
+	23 -> 31 [label="b"]
+	24 -> 35 [label="b"]
+	25 -> 36 [label="b"]
+	26 -> 34 [label="b"]
+	31 -> 42 [label="b"]
+	32 -> 43 [label="b"]
+	33 -> 41 [label="b"]
+	34 -> 45 [label="b"]
+	35 -> 46 [label="b"]
+	36 -> 44 [label="b"]
+	41 -> 32 [label="b"]
+	42 -> 33 [label="b"]
+	43 -> 31 [label="b"]
+	44 -> 35 [label="b"]
+	45 -> 36 [label="b"]
+	46 -> 34 [label="b"]
+
+}
+
+
+Упростим его:
+
+\digraph[scale=0.3]{esm25v2}{
+	rankdir=LR; 
+	node [shape=none]; start;
+	node [shape=doublecircle]; 42 43 45 46;
+	node [shape=circle]; 11 21 22 24 31 32 33 34 35 36 41 44;
+	start -> 11;
+	11 -> 24 [label="a"]
+	21 -> 34 [label="a"]
+	22 -> 35 [label="a"]
+	24 -> 31 [label="a"]
+	31 -> 44 [label="a"]
+	32 -> 45 [label="a"]
+	33 -> 46 [label="a"]
+	34 -> 41 [label="a"]
+	35 -> 42 [label="a"]
+	36 -> 43 [label="a"]
+	41 -> 34 [label="a"]
+	42 -> 35 [label="a"]
+	43 -> 36 [label="a"]
+	44 -> 31 [label="a"]
+	45 -> 32 [label="a"]
+	46 -> 33 [label="a"]
+
+
+
+	11 -> 22 [label="b"]
+	21 -> 32 [label="b"]
+	22 -> 33 [label="b"]
+	24 -> 35 [label="b"]
+	31 -> 42 [label="b"]
+	32 -> 43 [label="b"]
+	33 -> 41 [label="b"]
+	34 -> 45 [label="b"]
+	35 -> 46 [label="b"]
+	36 -> 44 [label="b"]
+	41 -> 32 [label="b"]
+	42 -> 33 [label="b"]
+	43 -> 31 [label="b"]
+	44 -> 35 [label="b"]
+	45 -> 36 [label="b"]
+	46 -> 34 [label="b"]
+
+}
+
+
+\section{Задание №3. Построить минимальный ДКА по регулярному выражению.}
+
+
+\subsection{Регулярное выражение 1.}
+$$ (ab + aba)^{*}a $$
+\subsection{Регулярное выражение 2.}
+$$ a(a (ab)^{*} b)^{*} (ab)^{*} $$
+\subsection{Регулярное выражение 3.}
+$$ (a + (a + b)(a + b)b)^{*} $$
+\subsection{Регулярное выражение 4.}
+$$ (b + c) ((ab)^{*}c + (ba)^{*})^{*} $$
+\subsection{Регулярное выражение 5.}
+$$ (a + b)^{+}(aa+bb+abab+baba)(a+b)^{+} $$
+
+\section{Задание №4. Определить является ли язык регулярным или нет.}
+
+
+\subsection{Язык 1.}
+$$ L = \left\{ (aab)^{n}b(aba)^{m} \mid n \geq 0, m \geq 0 \right\} $$
+\subsection{Язык 2.}
+$$ L = \left\{ uaav \mid u \in \left\{ a, b \right\}^{*}, v \in \left\{ a, b \right\}^{*}, \left| u \right|_{b} \geq \left| v \right|_{a} \right\} $$
+\subsection{Язык 3.}
+$$ L = \left\{ a^{m}w \mid w \in \left\{ a, b \right\}^{*}, 1 \leq \left| w \right|_{b} \leq m \right\} $$
+\subsection{Язык 4.}
+$$ L = \left\{ a^{k}b^{n}a^{n} \mid k = n \vee m > 0 \right\}$$
+\subsection{Язык 5.}
+$$ L = \left\{ ucv \mid u \in \left\{ a, b \right\}^{*}, v \in \left\{ a, b \right\}^{*}, u \neq v^{R}\right\} $$
+
+\section{Задание №5. Реализовать алгоритмы.}
+В рамках своего выполенения программа должна генерировать текстовый документ с картинками, показывающий процесс построения автомата (к примеру, Markdown с графиками на Graphviz).
+
+\begin{enumerate}
+	\item Построение ДКА по НКА с $\lambda$-переходами.
+	\item Прямое произведение языков, с возможностью построить пересечение, объединение и разность.
+\end{enumerate}
+
+\end{document}
