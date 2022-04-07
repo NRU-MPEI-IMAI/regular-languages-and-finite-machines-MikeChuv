@@ -632,28 +632,378 @@ $L_{2}$ & $\bar{L_{3}}$ & $a$ & $b$ \\ \hline
 
 \subsection{Регулярное выражение 1.}
 $$ (ab + aba)^{*}a $$
+
+
+\digraph[scale=0.5]{esm31v1}{
+	rankdir=LR; 
+	node [shape=none]; start;
+	node [shape=doublecircle]; 6;
+	node [shape=circle]; 1 2 3 4 5;
+	start -> 1;
+	1 -> 2 [label = "a"];
+	1 -> 3 [label = "a"];
+	1 -> 5 [label = "lmb"];
+	5 -> 1 [label = "lmb"];
+
+	3 -> 4 [label = "b"];
+	2 -> 5 [label = "b"];
+	4 -> 5 [label = "a"];
+	5 -> 6 [label = "a"];
+}
+
+Детерминируем этот автомат:
+
+\digraph[scale=0.5]{esm31v2}{
+	rankdir=LR; 
+	node [shape=none]; start;
+	node [shape=doublecircle]; 236 23516;
+	node [shape=circle]; 15 145;
+	start -> 15;
+	15 -> 236 [label = "a"];
+	236 -> 145 [label = "b"];
+	145 -> 23516 [label = "a"];
+	23516 -> 145 [label = "b"];
+	23516 -> 236 [label = "a"];
+}
+
+
 \subsection{Регулярное выражение 2.}
 $$ a(a (ab)^{*} b)^{*} (ab)^{*} $$
+
+
+\digraph[scale=0.5]{esm32v1}{
+	rankdir=LR; 
+	node [shape=none]; start;
+	node [shape=doublecircle]; 8;
+	node [shape=circle]; 1 2 3 4 5 6 7;
+	start -> 1;
+	1 -> 2 [label = "a"];
+	2 -> 3 [label = "a"];
+	2 -> 6 [label = "lmb"];
+	6 -> 2 [label = "lmb"];
+	3 -> 4 [label = "a"];
+	3 -> 5 [label = "lmb"];
+	5 -> 3 [label = "lmb"];
+	4 -> 5 [label = "b"];
+	5 -> 6 [label = "b"];
+	6 -> 7 [label = "a"];
+	6 -> 8 [label = "lmb"];
+	8 -> 6 [label = "lmb"];
+	7 -> 8 [label = "b"];
+}
+
+Детерминируем этот автомат:
+
+\digraph[scale=0.5]{esm32v2}{
+	rankdir=LR; 
+	node [shape=none]; start;
+	node [shape=doublecircle]; 268;
+	node [shape=circle]; 1 357 4 35;
+	start -> 1;
+	1 -> 268 [label = "a"];
+	268 -> 357 [label = "a"];
+	357 -> 4 [label = "a"];
+	357 -> 268 [label = "b"];
+	4 -> 35 [label = "b"];
+	35 -> 4 [label = "a"];
+	35 -> 268 [label = "b"];
+}
+
+
 \subsection{Регулярное выражение 3.}
 $$ (a + (a + b)(a + b)b)^{*} $$
+
+
+\digraph[scale=0.5]{esm33v1}{
+	rankdir=LR; 
+	node [shape=none]; start;
+	node [shape=doublecircle]; 4;
+	node [shape=circle]; 1 2 3;
+	start -> 1;
+	1 -> 2 [label = "a"];
+	1 -> 2 [label = "b"];
+	1 -> 4 [label = "lmb"];
+	1 -> 4 [label = "lmb"];
+	1 -> 4 [label = "a"];
+	2 -> 3 [label = "a"];
+	2 -> 3 [label = "b"];
+	3 -> 4 [label = "b"];
+}
+
+Детерминируем этот автомат:
+
+\digraph[scale=0.5]{esm33v2}{
+	rankdir=LR; 
+	node [shape=none]; start;
+	node [shape=doublecircle]; 14 412 341;
+	node [shape=circle]; 23 2 3;
+	start -> 14;
+	14 -> 412 [label = "a"];
+	14 -> 2 [label = "b"];
+	412 -> 412 [label = "a"]
+	412 -> 23 [label = "b"]
+	23 -> 3 [label = "a"]
+	23 -> 341 [label = "b"]
+	341 -> 14 [label = "a"]
+	341 -> 412 [label = "b"]
+	3 -> 14 [label = "b"]
+	2 -> 3 [label = "a"]
+	2 -> 3 [label = "b"]
+}
+
 \subsection{Регулярное выражение 4.}
 $$ (b + c) ((ab)^{*}c + (ba)^{*})^{*} $$
+
+
+\digraph[scale=0.5]{esm34v1}{
+	rankdir=LR; 
+	node [shape=none]; start;
+	node [shape=doublecircle]; 10;
+	node [shape=circle]; 1 2 3 4 5 6 7 8 9;
+	start -> 1;
+	1 -> 2 [label = "b"];
+	1 -> 2 [label = "c"];
+	2 -> 3 [label = "lmb"];
+	2 -> 7 [label = "lmb"];
+	2 -> 10 [label = "lmb"];
+	3 -> 4 [label = "a"]
+	3 -> 5 [label = "lmb"]
+	4 -> 5 [label = "b"]
+	5 -> 6 [label = "c"]
+	5 -> 3 [label = "lmb"]
+	6 -> 10 [label = "lmb"]
+	7 -> 8 [label = "b"]
+	7 -> 9 [label = "lmb"]
+	8 -> 9 [label = "a"]
+	9 -> 7 [label = "lmb"]
+	9 -> 10 [label = "lmb"]
+	10 -> 2 [label = "lmb"];
+}
+
+Детерминируем этот автомат:
+
+\digraph[scale=0.5]{esm34v2}{
+	rankdir=LR; 
+	node [shape=none]; start;
+	node [shape=doublecircle]; 2357910 62357910;
+	node [shape=circle]; 1 4 53 8;
+	start -> 1;
+	1 -> 2357910 [label = "b"];
+	1 -> 2357910 [label = "c"];
+	2357910 -> 4 [label = "a"];
+	2357910 -> 8 [label = "b"];
+	2357910 -> 62357910 [label = "c"];
+	62357910 -> 4 [label = "a"];
+	62357910 -> 8 [label = "b"];
+	62357910 -> 62357910 [label = "c"];
+	4 -> 53 [label = "b"];
+	53 -> 4 [label = "a"];
+	53 -> 62357910 [label = "c"];
+	8 -> 2357910 [label = "a"];
+}
+
 \subsection{Регулярное выражение 5.}
-$$ (a + b)^{+}(aa+bb+abab+baba)(a+b)^{+} $$
+$$ (a+b)^{+}(aa+bb+abab+baba)(a+b)^{+} $$
+
+
+\digraph[scale=0.5]{esm35v1}{
+	rankdir=LR; 
+	node [shape=none]; start;
+	node [shape=doublecircle]; 12;
+	node [shape=circle]; 1 2 3 4 5 6 7 8 9 10 11;
+	start -> 1;
+	1 -> 2 [label = "a"];
+	1 -> 2 [label = "b"];
+	2 -> 3 [label = "a"];
+	2 -> 3 [label = "b"];
+	2 -> 3 [label = "lmb"];
+	3 -> 2 [label = "lmb"];
+	3 -> 4 [label = "a"];
+	3 -> 7 [label = "b"];
+	4 -> 10 [label = "a"];
+	4 -> 5 [label = "b"];
+	5 -> 6 [label = "a"];
+	6 -> 10 [label = "b"];
+	7 -> 8 [label = "a"];
+	7 -> 10 [label = "b"];
+	8 -> 9 [label = "b"];
+	9 -> 10 [label = "a"];
+	10 -> 11 [label = "a"];
+	10 -> 11 [label = "b"];
+	11 -> 12 [label = "a"];
+	11 -> 12 [label = "b"];
+	11 -> 12 [label = "lmb"];
+	12 -> 11 [label = "lmb"];
+}
+
+
+\digraph[scale=0.2]{esm35v2}{
+	rankdir=LR; 
+	node [shape=none]; start;
+	node [shape=doublecircle]; 234101112 234861112 23759101112 23751112 237101112 23486101112 23481112 237591112;
+	node [shape=circle]; 1 23 234 237 23410 2375 2348 23710 23486 23759 2375910 2348610;
+	start -> 1;
+	1 -> 23 [label = "a"];
+	1 -> 23 [label = "b"];
+	23 -> 234 [label = "a"];
+	23 -> 237 [label = "b"];
+	234 -> 23410 [label = "a"]
+	234 -> 2375 [label = "b"]
+	237 -> 2348 [label = "a"]
+	237 -> 23710 [label = "b"]
+	23410 -> 234101112 [label = "a"]
+	23410 -> 23751112 [label = "b"]
+	2375 -> 23486 [label = "a"]
+	2375 -> 23710 [label = "b"]
+	2348 -> 23410 [label = "a"]
+	2348 -> 23759 [label = "b"]
+	23710 -> 23481112 [label = "a"]
+	23710 -> 237101112 [label = "b"]
+	234101112 -> 234101112 [label = "a"]
+	234101112 -> 23751112 [label = "b"]
+	23751112 -> 234861112 [label = "a"]
+	23751112 -> 237101112 [label = "b"]
+	23486 -> 23410 [label = "a"]
+	23486 -> 2375910 [label = "b"]
+	23759 -> 2348610 [label = "a"]
+	23759 -> 23710 [label = "b"]
+	23481112 -> 234101112 [label = "a"]
+	23481112 -> 237591112 [label = "b"]
+	237101112 -> 23481112 [label = "a"]
+	237101112 -> 237101112 [label = "b"]
+	234861112 -> 234101112 [label = "a"]
+	234861112 -> 23759101112 [label = "b"]
+	2375910 -> 23486101112 [label = "a"]
+	2375910 -> 237101112 [label = "b"]
+	2348610 -> 234101112 [label = "a"]
+	2348610 -> 23759101112 [label = "b"]
+	237591112 -> 23486101112 [label = "a"]
+	237591112 -> 237101112 [label = "b"]
+	23759101112 -> 23486101112 [label = "a"]
+	23759101112 -> 237101112 [label = "b"]
+	23486101112 -> 234101112 [label = "a"]
+	23486101112 -> 23759101112 [label = "b"]
+}
 
 \section{Задание №4. Определить является ли язык регулярным или нет.}
 
 
 \subsection{Язык 1.}
 $$ L = \left\{ (aab)^{n}b(aba)^{m} \mid n \geq 0, m \geq 0 \right\} $$
+
+
+\digraph[scale=0.5]{esm41}{
+	rankdir=LR; 
+	node [shape=none]; start;
+	node [shape=doublecircle]; 8;
+	node [shape=circle]; 1 2 3 4 5 6 7;
+	start -> 1;
+	1 -> 2 [label = "a"];
+	1 -> 4 [label = "lmb"];
+	2 -> 3 [label = "a"];
+	3 -> 4 [label = "b"];
+	4 -> 5 [label = "b"];
+	4 -> 1 [label = "lmb"];
+	5 -> 6 [label = "a"];
+	5 -> 8 [label = "lmb"];
+	6 -> 7 [label = "b"];
+	7 -> 8 [label = "a"];
+	8 -> 5 [label = "lmb"];
+}
+
+
+
 \subsection{Язык 2.}
 $$ L = \left\{ uaav \mid u \in \left\{ a, b \right\}^{*}, v \in \left\{ a, b \right\}^{*}, \left| u \right|_{b} \geq \left| v \right|_{a} \right\} $$
+
+
+Пусть $ \bar{L} = \left\{ uaav \mid u \in \left\{ a, b \right\}^{*}, v \in \left\{ a, b \right\}^{*}, \left| u \right|_{b} < \left| v \right|_{a} \right\} $
+
+Фиксируем $ n $
+
+Пусть $ w = b^{n} aa a^{n+1}; \quad \left| w \geq n \right| $ (Взяли такое разбиение, так как количество букв $ a $ в $ u $ и количество букв $ b $ в $ v $ не важны)
+
+$ x = b^{l} $ 
+
+$ y = b^{p} $
+
+$ z = b^{n-l-p}aaa^{n+1} $
+
+$ xy^{k}z = b^{n+p(k-1)}aaa^{n+1} $ (при $ k \geq 2 \quad w \notin \bar{L} $) $ \Rightarrow  \bar{L} $ - нерегулярный язык, следовательно, $ L $ также не является регулярным.
+
+
+
 \subsection{Язык 3.}
 $$ L = \left\{ a^{m}w \mid w \in \left\{ a, b \right\}^{*}, 1 \leq \left| w \right|_{b} \leq m \right\} $$
+
+Пусть $ \bar{L} = \left\{ a^{m}w \mid w \in \left\{ a, b \right\}^{*},  \left| w \right|_{b} > m \right\} $
+
+$ w_{1} = a^{m}b^{n} $, $ \left| w_{1} \geq n \right| $ - выполнено.
+
+$ x = a^{p} $
+
+$ y = a^{l} $
+
+$ z = a^{m-l-p}b^{n} $
+
+$ p + l < n $ - выполнено, так как, по условию языка $ \bar{L}  \quad m < n$
+
+$ w_{1}' = xy^{k}z = a^{m+l(k-1)}b^{n} \Rightarrow$ при $ k \geq 2 \quad w_{1}' \notin \bar{L} \Rightarrow \bar{L}$ нерегулярный язык $ \Rightarrow \quad L$ - нерегулярный язык.
+
+
+
 \subsection{Язык 4.}
 $$ L = \left\{ a^{k}b^{n}a^{n} \mid k = n \vee m > 0 \right\}$$
+
+1) $ k = n \quad \Rightarrow L_{1} = \left\{ a^{n}b^{m}a^{n} \right\} $
+\bigskip
+
+$ w_{1} = a^{n}b^{m}a^{n} \quad \left| w_{1} \right| \geq n$
+
+$ x = a^{l} $
+
+$ y = a^{p} $
+
+$ z = a^{n-l-p}b^{m}a^{n} $
+
+\bigskip
+$ l+p \leq n $
+
+$ p \geq 1 $
+
+\bigskip
+$ w_{1}' = xy^{t}z = a^{n+p(t-1)}b^{m}a^{n} \quad \Rightarrow \quad w_{1}' \notin L_{1} $ при $ t \geq 2 $
+
+\bigskip
+2) $ k = m \quad \Rightarrow L_{2} = \left\{ a^{m}b^{m}a^{n} \right\} $
+\bigskip
+
+$ w_{2} = a^{m}b^{m}a^{n} \quad \left| w_{2} \right| \geq m$
+
+$ x = a^{l} $
+
+$ y = a^{p} $
+
+$ z = a^{m-l-p}b^{m}a^{n} $
+\bigskip
+
+$ l+p \leq m $
+
+$ p \geq 1 $
+\bigskip
+
+$ w_{2}' = xy^{t}z = a^{m+p(t-1)}b^{m}a^{n} \quad \Rightarrow \quad w_{2}' \notin L_{2} $ при $ t \geq 2 $
+\bigskip
+
+Из 1), 2) $ \Rightarrow $ язык $ L $ - нерегулярный.
 \subsection{Язык 5.}
 $$ L = \left\{ ucv \mid u \in \left\{ a, b \right\}^{*}, v \in \left\{ a, b \right\}^{*}, u \neq v^{R}\right\} $$
+
+Пусть $ \bar{L} = \left\{ ucv \mid u \in \left\{ a, b \right\}^{*}, v \in \left\{ a, b \right\}^{*}, u = v^{R}\right\}  $
+
+Фиксируем $ n $: $ \left| u \right| \leq n$
+
+При разделении $ u $ на $ x $ и $ y $ и накачке перестанет выполнятся равенство $ u = v^{R} $, поэтому язык $ \bar{L} $ нерегулярный $ \Rightarrow $ язык $ L $ также не является регулярным. 
 
 \section{Задание №5. Реализовать алгоритмы.}
 В рамках своего выполенения программа должна генерировать текстовый документ с картинками, показывающий процесс построения автомата (к примеру, Markdown с графиками на Graphviz).
